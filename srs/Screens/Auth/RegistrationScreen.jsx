@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { View, TextInput, ImageBackground, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import styles from '../../assets/styles/AuthScreenStyles';
+import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons';
 
 const PhotoBG = require('../../assets/images/PhotoBG.png');
 
@@ -10,6 +12,8 @@ export default RegistrationComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigation = useNavigation();
 
   const handleSubmit = () => {
     console.log('Логін:', username);
@@ -50,7 +54,12 @@ export default RegistrationComponent = () => {
 
             <View style={styles.btnAddPhoto}>
               <TouchableOpacity style={styles.btnPhoto}>
-                <Text style={styles.singAddPhoto}>+</Text>
+                <AntDesign 
+                  name="pluscircleo" 
+                  size={25} 
+                  color="#FF6C00" 
+                />
+                {/* <Text style={styles.singAddPhoto}>+</Text> */}
               </TouchableOpacity>
             </View>
 
@@ -84,14 +93,22 @@ export default RegistrationComponent = () => {
                 </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity style={styles.singUpBtn} onPress={handleSignUp}>
+            <TouchableOpacity 
+              style={styles.singUpBtn} 
+              onPress={() => {
+                handleSignUp();
+                navigation.navigate("Home", {
+                  screen: "PostScreen",
+                });
+              }}
+            >
               <Text
                 style={styles.singUpText}
               >
                 Зареєструватися
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.singInTitle}>
+            <TouchableOpacity style={styles.singInTitle} onPress={() => navigation.navigate("Login")}>
               <Text style={styles.singInText}>Вже є акаунт? Увійти</Text>
             </TouchableOpacity>
           </View>

@@ -8,7 +8,7 @@ const styles = {
       marginLeft: "auto",
       marginRight: "auto",
       width: "100%",
-      padding: 16,
+      padding: 20,
       backgroundColor: "#fff",
       borderTopLeftRadius: 25,
       borderTopRightRadius: 25,
@@ -32,10 +32,6 @@ const styles = {
       bottom: 10,
       right: -15,
       width: 30,
-      borderWidth: 1,
-      borderColor: '#FF6C00',
-      borderStyle: "solid",
-      borderRadius: 300,
     },
     singAddPhoto: {
       color: '#FF6C00',
@@ -48,8 +44,16 @@ const styles = {
       fontWeight: 500,
       letterSpacing: 0.3,
       color: "#212121",
-      marginTop: 92,
-      marginBottom: 33,
+      marginTop: 62,
+      marginBottom: 32,
+    },
+    textLogin: {
+      fontSize: 30,
+      fontWeight: 500,
+      letterSpacing: 0.3,
+      color: "#212121",
+      marginTop: 32,
+      marginBottom: 32,
     },
     input: {
       width: '100%',
@@ -78,7 +82,7 @@ const styles = {
       color: "#fff",
     },
     singInTitle: {
-  
+      marginBottom: 32,
     },
     singInText: {
       fontSize: 16,
