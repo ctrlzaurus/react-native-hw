@@ -1,7 +1,7 @@
 import React from 'react';
 // import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import { View } from 'react-native';
@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PostsScreen from './PostsScreen';
 import CreatePostsScreen from './CreatePostsScreen';
 import ProfileScreen from './ProfileScreen';
-import { StyleSheet } from 'react-native';
+import styles from '../../assets/styles/HomeStyles';
 
 // const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -48,23 +48,27 @@ export default function Home() {
     navigation.replace('Login');
   };
 
-//   useFocusEffect(() => {
-//     const parentNavigation = navigation.dangerouslyGetParent();
-//     if (parentNavigation) {
-//       parentNavigation.setOptions({
-//         tabBarVisible: navigation.route.name !== 'CreatePost',
-//       });
-//     }
-//   });
+  const handleGoBack = () => {
+    navigation.navigate('Posts');
+  };
 
-    const AddButton = ({ onPress, color, size }) => (
-        <TouchableOpacity
-            style={[styles.addButton, { backgroundColor: color }]}
-            onPress={onPress}
-        >
-            <MaterialIcons name="add" size={size} color="#FFFFFF" />
-        </TouchableOpacity>
-    );
+  const AddButton = ({ onPress, color, size }) => (
+      <TouchableOpacity
+          style={[styles.addButton, { backgroundColor: color }]}
+          onPress={onPress}
+      >
+          <MaterialIcons name="add" size={size} color="#FFFFFF" />
+      </TouchableOpacity>
+  );
+
+  const LeftArrowButton = ({ onPress }) => (
+    <TouchableOpacity
+      style={{ marginRight: 10, paddingLeft: 20 }}
+      onPress={onPress}
+    >
+      <AntDesign name="arrowleft" size={24} color="black" />
+    </TouchableOpacity>
+  );
 
   return (
     <Tabs.Navigator
@@ -89,9 +93,6 @@ export default function Home() {
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
         tabBarLabel: () => null,
-        // tabStyle: {
-        //     paddingHorizontal: 10, 
-        //   },
       })}
       tabBarOptions={{
         showLabel: false,
@@ -128,21 +129,34 @@ export default function Home() {
             },
         }} 
       />
-      <Tabs.Screen name="CreatePost" component={CreatePostsScreen} />
-      <Tabs.Screen name="Profile" component={ProfileScreen} />
+      <Tabs.Screen 
+        name="CreatePost" 
+        component={CreatePostsScreen}
+        options={{ 
+          title: "Створити публікацію",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+          color: "#212121",
+          textAlign: "center",
+          fontSize: 17,
+          lineHeight: 22,
+          letterSpacing: -0.408, 
+          },
+          headerStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: "#E0E0E0", 
+          },
+          tabBarVisible: false,
+          headerLeft: () => <LeftArrowButton onPress={handleGoBack} />,
+        }} 
+      />
+      <Tabs.Screen 
+        name="Profile" 
+        component={ProfileScreen}
+      />
     </Tabs.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-    addButton: {
-      width: 70,
-      height: 40,
-      borderRadius: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
 
 // import React from 'react';
 // // import { View, Text } from 'react-native';
