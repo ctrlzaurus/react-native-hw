@@ -78,6 +78,7 @@ const styles = {
       paddingLeft: 16,
     },
     btnTrash: {
+      marginTop: 10,
       justifyContent: "center",
       alignItems: "center",
       width: 70,

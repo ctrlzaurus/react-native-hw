@@ -105,15 +105,6 @@ export default function CreatePostsScreen() {
   
     setState(initialState);
   };
-  // const sendPost = () => {
-  //   const { photo, name, location } = state;
-  //   if (!photo || !name.trim() || !location.trim()) {
-  //     return;
-  //   }
-
-  //   navigation.navigate("Posts", { state });
-  //   setState(initialState);
-  // };
 
   const deletePost = () => {
     setState(initialState);
