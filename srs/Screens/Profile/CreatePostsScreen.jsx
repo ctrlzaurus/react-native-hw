@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState, useRef } from "react";
 import { View, Text, TouchableOpacity, Image, TouchableWithoutFeedback, KeyboardAvoidingView, TextInput, Keyboard, Platform, Alert } from "react-native";
 import { Camera } from "expo-camera";
@@ -7,6 +5,7 @@ import * as Location from "expo-location";
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import styles from "../../assets/styles/CreatePostScreenStyles";
+import { useNavigation } from "@react-navigation/native";
 
 const initialState = {
   name: "",
@@ -15,12 +14,14 @@ const initialState = {
   photo: "",
 };
 
-export default function CreatePostsScreen({ navigation }) {
+export default function CreatePostsScreen() {
   const [state, setState] = useState(initialState);
   const [photo, setPhoto] = useState(null);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const cameraRef = useRef(null);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -41,31 +42,34 @@ export default function CreatePostsScreen({ navigation }) {
 
   const takePhoto = async () => {
     try {
-        const { uri } = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1,
-          });
-    
-          if (!uri.cancelled) {
-            setPhoto(uri);
-            setState((prevState) => ({ ...prevState, photo: uri }));
-          }
-        } catch (error) {
-          console.log(error.message);
-        }
-  };
-
-  const choosePhoto = async () => {
-    try {
-      const { uri } = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [1, 1],
         quality: 1,
       });
-      if (!uri.cancelled) {
+  
+      if (!result.canceled && result.assets.length > 0) {
+        const uri = result.assets[0].uri;
+        setPhoto(uri);
+        setState((prevState) => ({ ...prevState, photo: uri }));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
+  const choosePhoto = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+  
+      if (!result.canceled && result.assets.length > 0) {
+        const uri = result.assets[0].uri;
         setPhoto(uri);
         setState((prevState) => ({ ...prevState, photo: uri }));
       }
@@ -92,14 +96,24 @@ export default function CreatePostsScreen({ navigation }) {
   };
 
   const sendPost = () => {
-    const { photo, name, location } = state;
+    const { photo, name, location, coords } = state;
     if (!photo || !name.trim() || !location.trim()) {
       return;
     }
-
-    navigation.navigate("Posts", { state });
+  
+    navigation.navigate("Posts", { post: { photo, name, location, coords } });
+  
     setState(initialState);
   };
+  // const sendPost = () => {
+  //   const { photo, name, location } = state;
+  //   if (!photo || !name.trim() || !location.trim()) {
+  //     return;
+  //   }
+
+  //   navigation.navigate("Posts", { state });
+  //   setState(initialState);
+  // };
 
   const deletePost = () => {
     setState(initialState);
@@ -131,7 +145,9 @@ export default function CreatePostsScreen({ navigation }) {
             </Camera>
           </View>
           {!state.photo ? (
-            <Text style={styles.uploadText}>Завантажте фото</Text>
+            <TouchableOpacity style={styles.buttonChoose} onPress={choosePhoto}>
+              <Text style={styles.textBtn}>Вибрати фото</Text>
+            </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={() => {}}>
               <Text style={styles.uploadText}>Редагувати фото</Text>
