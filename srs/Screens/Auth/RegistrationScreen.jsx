@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { View, TextInput, ImageBackground, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
@@ -13,6 +15,8 @@ export default RegistrationComponent = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  const dispatch = useDispatch();
+  
   const navigation = useNavigation();
 
   const handleSubmit = () => {

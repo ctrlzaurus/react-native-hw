@@ -10,6 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { userReducer, postsReducer } from "./slice";
 // import rootReducer from './rootReducer';
 
 const persistUserConfig = {
