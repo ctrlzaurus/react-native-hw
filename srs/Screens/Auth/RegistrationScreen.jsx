@@ -6,6 +6,8 @@ import { View, TextInput, ImageBackground, Text, TouchableOpacity, TouchableWith
 import styles from '../../assets/styles/AuthScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 const PhotoBG = require('../../assets/images/PhotoBG.png');
 
@@ -20,9 +22,9 @@ export default RegistrationComponent = () => {
   const navigation = useNavigation();
 
   const handleSubmit = () => {
-    console.log('Логін:', username);
-    console.log('Email:', email);
-    console.log('Пароль:', password);
+    // console.log('Логін:', username);
+    // console.log('Email:', email);
+    // console.log('Пароль:', password);
 
     setUsername('');
     setEmail('');
@@ -41,13 +43,29 @@ export default RegistrationComponent = () => {
     return isValid;
   };
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (validateEmail()) {
-      handleSubmit();
+      try {
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
+        handleSubmit();
+        navigation.navigate('Home', {
+          screen: 'PostScreen',
+        });
+      } catch (error) {
+        Alert.alert('Помилка при реєстрації:', error.message);
+      }
     } else {
       Alert.alert('Будь ласка, введіть коректну електронну пошту');
     }
   };
+
+  // const handleSignUp = () => {
+  //   if (validateEmail()) {
+  //     handleSubmit();
+  //   } else {
+  //     Alert.alert('Будь ласка, введіть коректну електронну пошту');
+  //   }
+  // };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
