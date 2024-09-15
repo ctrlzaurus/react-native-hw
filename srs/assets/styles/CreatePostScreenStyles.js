@@ -1,0 +1,91 @@
+const styles = {
+  container: {
+      flex: 1,
+      backgroundColor: "#FFFFFF",
+    },
+    cameraWrapper: {
+      marginTop: 32,
+      marginHorizontal: 16,
+      justifyContent: "center",
+      borderRadius: 8,
+    },
+    camera: {
+      justifyContent: "center",
+      alignItems: "center",
+      aspectRatio: 343 / 240,
+      borderRadius: 8,
+      width: "100%",
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderColor: "#E8E8E8",
+    },
+    takePhotoCamera: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: 100,
+      height: 100,
+      borderRadius: 8,
+    },
+    buttonCamera: {
+      justifyContent: "center",
+      alignItems: "center",
+      width: 60,
+      height: 60,
+      borderRadius: 100,
+      backgroundColor: "#FFFFFF4D",
+    },
+    photo: {
+      width: 100,
+      height: 100,
+      borderRadius: 8,
+    },
+    uploadText: {
+      marginTop: 8,
+      paddingLeft: 16,
+      fontSize: 16,
+      lineHeight: 19,
+      color: "#BDBDBD",
+    },
+    inpuWrapper: {
+      position: "relative",
+      marginHorizontal: 16,
+      borderBottomWidth: 1,
+      borderColor: "#E8E8E8",
+    },
+    inputTitle: {
+      marginBottom: 15,
+      fontSize: 16,
+      lineHeight: 19,
+      color: "#212121",
+    },
+    btnPublish: {
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 32,
+      marginHorizontal: 16,
+      height: 51,
+      borderRadius: 100,
+      backgroundColor: "#F6F6F6",
+    },
+    textBtn: {
+      fontSize: 16,
+      lineHeight: 19,
+      color: "#BDBDBD",
+    },
+    buttonChoose: {
+      marginTop: 8,
+      paddingLeft: 16,
+    },
+    btnTrash: {
+      marginTop: 10,
+      justifyContent: "center",
+      alignItems: "center",
+      width: 70,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: "#F6F6F6",
+    },
+};
+
+export default styles;
